@@ -2,6 +2,7 @@ package br.com.arthur.recipeapi.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,23 +20,56 @@ import javax.persistence.OneToMany;
 import lombok.Data;
 
 
-@Entity(name="tb_recipe")
-@Data
+@Entity(name="recipe")
 public class Recipe {
+
 	@Id
-	@Column(name="id_recipe")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="title_recipe")
+	@Column(name="title")
 	private String title;
 	
-	@Column(name="content_recipe")
+	@Column(name="content")
 	private String content;
 	
-//	  @ManyToOne
-//	  private Category category;
+	@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "recipe_category",
+        joinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+	private Set<Category> category;
 
+	public Set<Category> getCategory() {
+		return category;
+	}
+
+	public void setCategory(Set<Category> category) {
+		this.category = category;
+	}
+
+	public int getId() {
+		return id;
+	}
 	
-
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 }

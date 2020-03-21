@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v0/recipe")
 @Slf4j
 public class RecipeController {
+	@Autowired
 	private final RecipeService recipeService;
 	
 	public RecipeController(RecipeService recipeService) {
@@ -34,11 +36,10 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> findAll() {
         return ResponseEntity.ok(recipeService.findAll());
     }
-    
 
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody Recipe product) {
-        return ResponseEntity.ok(recipeService.save(product));
+    public ResponseEntity create(@Valid @RequestBody Recipe recipe) {	
+        return ResponseEntity.ok(recipeService.save(recipe));
     }
 
     @GetMapping("/{id}")
@@ -48,7 +49,6 @@ public class RecipeController {
             System.err.println("Id " + id + " is not existed");
             ResponseEntity.badRequest().build();
         }
-
         return ResponseEntity.ok(stock.get());
     }
 
@@ -58,7 +58,6 @@ public class RecipeController {
         	System.err.println("Id " + id + " is not existed");
             ResponseEntity.badRequest().build();
         }
-
         return ResponseEntity.ok(recipeService.save(product));
     }
 
