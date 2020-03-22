@@ -25,8 +25,8 @@ public class RecipeService {
         return recipeRepository.findById(id);
     }
 
-    public Recipe save(Recipe recipe) {
-        return recipeRepository.saveAndFlush(recipe);
+    public Recipe save(Recipe stock) {
+        return recipeRepository.save(stock);
     }
 
     public void deleteById(Long id) {
